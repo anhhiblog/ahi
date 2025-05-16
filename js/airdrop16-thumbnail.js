@@ -1,10 +1,14 @@
 function showrecentpostswiththumbs(t) {
   document.write('<ul class="recent_posts_with_thumbs">');
   for (var e = 0; e < numposts; e++) {
-    var r,
-      i,
-      n = t.feed.entry[e],
-      l = n.title.$t;
+    var r, i;
+    var n = t.feed.entry[e];
+    if (!n || !n.title || !n.title.$t) {
+      console.warn("Bỏ qua bài viết không hợp lệ hoặc thiếu tiêu đề:", n);
+      continue;
+    }
+    var l = n.title.$t;
+
     if (e == t.feed.entry.length) break;
     for (var o = 0; o < n.link.length; o++) {
       if ("replies" == n.link[o].rel && "text/html" == n.link[o].type)
